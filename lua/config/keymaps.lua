@@ -25,6 +25,17 @@
 -- vim.keymap.set("n", "<leader>;cl", vim.cmd('let @*=expand("%:p")'), { desc = "full path" })
 -- end
 
+local function map(mode, lhs, rhs, opts)
+  local keys = require("lazy.core.handler").handlers.keys
+  ---@cast keys LazyKeysHandler
+  -- do not create the keymap if a lazy keys handler exists
+  if not keys.active[keys.parse({ lhs, mode = mode }).id] then
+    opts = opts or {}
+    opts.silent = opts.silent ~= false
+    vim.keymap.set(mode, lhs, rhs, opts)
+  end
+end
+
 local wk = require("which-key")
 
 wk.register({
@@ -36,3 +47,6 @@ wk.register({
     F = { "<cmd>let @*=expand('%:p')<cr>", "full path" },
   },
 })
+
+map("n", "H", "<cmd>b#<cr>", { desc = "previous buffer" })
+vim.keymap.del("n", "L")

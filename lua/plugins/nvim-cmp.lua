@@ -27,7 +27,7 @@ return {
 
       -- This is reaaaally not easy to setup :D
       opts.mapping = vim.tbl_extend("force", opts.mapping, {
-        ["<Tab>"] = cmp.mapping(function(fallback)
+        ["<C-j>"] = cmp.mapping(function(fallback)
           -- If it's a snippet then jump between fields
           if luasnip.expand_or_jumpable() then
             luasnip.expand_or_jump()
@@ -42,7 +42,7 @@ return {
             fallback()
           end
         end, { "i", "s" }),
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
+        ["<C-k>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_prev_item()
           elseif luasnip.jumpable(-1) then
